@@ -3,6 +3,27 @@ import {useState} from 'react';
 export const useCalculator = () => {
   const [number, setNumber] = useState('0');
 
+  const clean = () => {
+    setNumber('0');
+  };
+
+  //   Borrar el ultimo numero
+  const deleteOperation = () => {
+    let positive = number.replace('-', '');
+    if (positive.length <= 1) {
+      setNumber('0');
+    } else {
+      setNumber(number.substring(0, number.length - 1));
+    }
+  };
+
+  const toggleSign = () => {
+    if (number.includes('-')) {
+      return setNumber(number.replace('-', ''));
+    }
+    setNumber('-' + number);
+  };
+
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') {
       return;
@@ -36,5 +57,8 @@ export const useCalculator = () => {
     number,
     // Methods
     buildNumber,
+    clean,
+    deleteOperation,
+    toggleSign,
   };
 };
